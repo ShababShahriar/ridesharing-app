@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "171877305647",
+    "firebase_url": "https://ridesharing-162516.firebaseio.com",
+    "project_id": "ridesharing-162516",
+    "storage_bucket": "ridesharing-162516.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:171877305647:android:1da9e28713f4396d",
+        "android_client_info": {
+          "package_name": "petproject.ridesharing"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "171877305647-m314svc3hd0bvchs2k9qnm53mkiu94mi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfn3V78N8EQCKNxmL-OiVDC6YUo9FX4d8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
