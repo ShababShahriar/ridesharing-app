@@ -1,8 +1,11 @@
 *.iml
 .gradle
-/local.properties
-/.idea/
+ridesharing-frontend/local.properties
 .DS_Store
-/build
-/captures
+ridesharing-frontend/build
+ridesharing-frontend/captures
 .externalNativeBuild
+ridesharing-frontend/.idea
+ridesharing-backend/.idea
+/.idea
+*.pyc
