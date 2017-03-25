@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="/Users/newscred/.android/build-cache/d96992094844991a0aeb6fed8a6f1265ee194dd6/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="b215e312bdc1ee7bfda31674eab5df8bad45c014">
+        <dex dex="/Users/newscred/Applications/Personal/RideSharing/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_4507c2885cc928dfa2c33ef971ee0b5fd65948bd/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/newscred/.android/build-cache/881aa69cca17ed56b221efa92cfd3c83b1098fb9/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="6003d64df88a6ce5e961fa2bad7f1b9b97689ac1">
+        <dex dex="/Users/newscred/Applications/Personal/RideSharing/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_d9fd2c017d158cfdfb1ed64af86c65ad27eed6c3/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/newscred/.android/build-cache/3944952df6d7006b7cf29a6a419035b00fea5030/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="399f75732ff1ac159f9e73611536f1508bf18d3b">
+        <dex dex="/Users/newscred/Applications/Personal/RideSharing/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_e74af9bed1094e2d5c69252bf16c2bc3b8e448d5/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/newscred/.android/build-cache/7ddc6d36bc2e462b78fe02a2bfb5f71a7598e799/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="bdcc2a9572f18b8c90a3a157cab6cdfc97c6c736">
+        <dex dex="/Users/newscred/Applications/Personal/RideSharing/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_e9c86319d8caf12c276d0a74682267fe08e78d82/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/newscred/.android/build-cache/d45d617c4032b1a2c1daf9c894936fa466297635/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="a1aa1dd9917e887bfe732cc5e561ae6ae8f9a84a">
+        <dex dex="/Users/newscred/Applications/Personal/RideSharing/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_2358f57eb8bc75e98eb39abd0e320e6961c600b3/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/newscred/Applications/Personal/RideSharing/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="c82741bc129dd5f99f11a4ab8666ae24262053b6">
+        <dex dex="/Users/newscred/Applications/Personal/RideSharing/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_6cd9b5112ae686c1259eafff7f60dc93c6fac3de/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/newscred/Applications/Personal/RideSharing/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="bad94769cd5e604012f16765d3b8515e89443dc8">
+        <dex dex="/Users/newscred/Applications/Personal/RideSharing/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_3f50a8cc96cea82d0becaa0713b150d8c283bc61/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/newscred/.android/build-cache/70a823a8e457fe28b5085b0bf7a91dc338b2a7fa/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="888983f51cf34f57a93ff16832552f2f15937212">
+        <dex dex="/Users/newscred/Applications/Personal/RideSharing/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_126cec57b3faa2f0fccb35264b286775bef5c657/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/newscred/.android/build-cache/97cbbdf7d6d05db55f0d50ecd4c350a1b393ba0c/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="0a5d5553c308643a9022f15513ebdd59e9c78d82">
+        <dex dex="/Users/newscred/Applications/Personal/RideSharing/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_485c575b08b88d4a45467c88bf4299ebba5e29ac/classes.dex" />
+    </item>
+
+</items>
