@@ -3,8 +3,6 @@ package petproject.ridesharing;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,30 +13,20 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
+//import com.android.volley.NetworkResponse;
+//import com.android.volley.Request;
+//import com.android.volley.Response;
+//import com.android.volley.VolleyError;
+//import com.android.volley.toolbox.StringRequest;
 
-import com.google.firebase.messaging.FirebaseMessaging;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-public class MainActivity extends AppCompatActivity
+public class ChatActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
-    public static final String TAG = MainActivity.class
-            .getSimpleName();
-
-    private RequestQueue mRequestQueue;
-
-    private static MainActivity mInstance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mInstance = this;
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_chat);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -46,48 +34,19 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Subscribing to topic...", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-
-                FirebaseMessaging.getInstance().subscribeToTopic("news");
             }
         });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-    }
-
-    public static synchronized MainActivity getInstance() {
-        return mInstance;
-    }
-
-    public RequestQueue getRequestQueue() {
-        if (mRequestQueue == null) {
-            mRequestQueue = Volley.newRequestQueue(getApplicationContext());
-        }
-
-        return mRequestQueue;
-    }
-
-    public <T> void addToRequestQueue(Request<T> req, String tag) {
-        req.setTag(TextUtils.isEmpty(tag) ? TAG : tag);
-        getRequestQueue().add(req);
-    }
-
-    public <T> void addToRequestQueue(Request<T> req) {
-        req.setTag(TAG);
-        getRequestQueue().add(req);
-    }
-
-    public void cancelPendingRequests(Object tag) {
-        if (mRequestQueue != null) {
-            mRequestQueue.cancelAll(tag);
-        }
     }
 
     @Override
@@ -103,7 +62,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.chat, menu);
         return true;
     }
 

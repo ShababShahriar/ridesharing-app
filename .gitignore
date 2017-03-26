@@ -5,7 +5,6 @@ ridesharing-frontend/local.properties
 ridesharing-frontend/build
 ridesharing-frontend/captures
 .externalNativeBuild
-ridesharing-frontend/.idea
-ridesharing-backend/.idea
-/.idea
+**/.idea/
 *.pyc
+ridesharing-backend/config/*.pyc

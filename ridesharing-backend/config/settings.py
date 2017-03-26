@@ -25,7 +25,7 @@ SECRET_KEY = 'hta(6p5u&s$0sc%!z0y-9959-rhypkcz5b*9b1tw#htduairaw'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -77,7 +77,11 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ridesharing-backend',
+        'NAME': 'ridesharing',
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': '127.0.0.1',
+        'PORT': 3306,
     }
 }
 
@@ -121,3 +125,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 NAME_MAX_LENGTH = 20
+
+API_KEY = 'AIzaSyC73V1Rsqg09hdDKxYCQ_OG1ZX4hCZEkaE'
