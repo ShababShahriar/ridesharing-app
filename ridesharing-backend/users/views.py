@@ -2,7 +2,6 @@ import json
 
 from django.http import JsonResponse
 from rest_framework.views import APIView
-from rest_framework.response import Response
 
 from models import User
 
@@ -20,7 +19,7 @@ class Login(APIView):
         else:
             response['success'] = False
 
-        return Response(json.dumps(response))
+        return JsonResponse(response)
 
 
 # /updateToken/
