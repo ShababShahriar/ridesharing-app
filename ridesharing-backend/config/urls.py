@@ -15,8 +15,9 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from users import views as userViews
-from messages import views as messageViews
+
+from ridesharing.messages import views as messageViews
+from ridesharing.users import views as userViews
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),

@@ -16,6 +16,7 @@ class User(Model):
     key_expires_at = DateTimeField(null=True)
     phone_verified = BooleanField(default=False)
     unverified_phone = IntegerField(null=True)
+    created_at = DateTimeField(auto_now_add=True)
 
     @staticmethod
     def login(**kwargs):
