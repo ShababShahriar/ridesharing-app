@@ -4,8 +4,6 @@ from __future__ import unicode_literals
 
 from django.db import migrations, models
 import django.db.models.deletion
-import django_enumfield.db.fields
-import ridesharing.bookings.models
 
 
 class Migration(migrations.Migration):
@@ -29,7 +27,6 @@ class Migration(migrations.Migration):
                 ('start_time', models.DateTimeField()),
                 ('from_location', models.CharField(max_length=30)),
                 ('to_location', models.CharField(max_length=30)),
-                ('ride_type', django_enumfield.db.fields.EnumField(default=b'cng', enum=ridesharing.bookings.models.RideType)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('created_by', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='users.User')),
             ],
