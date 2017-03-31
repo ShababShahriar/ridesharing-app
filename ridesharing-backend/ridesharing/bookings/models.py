@@ -38,7 +38,8 @@ class Booking(Model):
                 'user': kwargs.get('created_by'),
                 'booking': booking
             }
-            return UserBooking.add_user_booking(**data)
+            if UserBooking.add_user_booking(**data):
+                return booking.id
         except:
             return False
 

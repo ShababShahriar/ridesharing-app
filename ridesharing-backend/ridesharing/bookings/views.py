@@ -18,8 +18,11 @@ class AddNewBooking(APIView):
 
         response = {}
 
-        if Booking.add_booking(**data):
+        booking_id = Booking.add_booking(**data)
+
+        if booking_id:
             response['success'] = True
+            response['booking_id'] = booking_id
         else:
             response['success'] = False
 
