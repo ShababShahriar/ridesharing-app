@@ -27,4 +27,5 @@ urlpatterns = [
     url(r'^message/', messageViews.SendToTopic.as_view()),
     url(r'^addbooking/', bookingViews.AddNewBooking.as_view()),
     url(r'^joinbooking/', bookingViews.JoinBooking.as_view()),
+    url(r'^getActiveBookingList', bookingViews.GetActiveBookingList.as_view()),
 ]

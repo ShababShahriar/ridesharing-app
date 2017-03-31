@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="petproject.ridesharing.ShowBookingsActivity"
+    tools:showIn="@layout/activity_show_bookings"
+    android:padding="5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="10dp">
+        <LinearLayout
+            android:layout_weight="0.7"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="FROM:"
+                android:textStyle="bold"
+                android:padding="5dp"/>
+
+            <TextView
+                android:id="@+id/show_from_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="F"
+                android:textStyle="bold"
+                android:padding="5dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TO:"
+                android:textStyle="bold"
+                android:padding="5dp"/>
+
+            <TextView
+                android:id="@+id/show_to_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="T"
+                android:textStyle="bold"
+                android:padding="5dp"/>
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/show_bookings_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4"
+        android:scrollbars="vertical" />
+
+</LinearLayout>

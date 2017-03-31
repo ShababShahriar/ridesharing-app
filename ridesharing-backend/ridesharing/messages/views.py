@@ -40,3 +40,23 @@ class SendToTopic(APIView):
 
         return JsonResponse(response)
 
+
+# /usertopics
+class GetUserTopics(APIView):
+    def get(self, request):
+        user_id = request.GET.get('userID')
+        user = User.objects.get(id=user_id)
+
+        headers = {
+            'Authorization': 'key=' + SERVER_KEY,
+        }
+
+        params = {
+            'details': True,
+        }
+
+        fcm_response = requests.get('https://iid.googleapis.com/iid/info/' + user.reg_token, params=params, headers=headers)
+
+        fcm_json_response = json.loads(fcm_response.content)
+
+        return JsonResponse(fcm_json_response.get('rel').get('topics'))

@@ -21,8 +21,6 @@ import com.android.volley.toolbox.Volley;
 
 import com.google.firebase.messaging.FirebaseMessaging;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -49,7 +47,7 @@ public class MainActivity extends AppCompatActivity
                 Snackbar.make(view, "Subscribing to topic...", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
 
-                FirebaseMessaging.getInstance().subscribeToTopic("news");
+                FirebaseMessaging.getInstance().subscribeToTopic("news2");
             }
         });
 

@@ -1,12 +1,16 @@
 package petproject.ridesharing;
 
+import android.app.Activity;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -16,6 +20,13 @@ import android.widget.Toast;
 //import com.firebase.jobdispatcher.Job;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+
+import org.json.JSONObject;
+
+import java.util.Map;
+
+import petproject.ridesharing.models.ChatMessage;
+import petproject.ridesharing.models.User;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
@@ -47,22 +58,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         if (remoteMessage.getData().size() > 0) {
             Log.d(TAG, "Message data payload: " + remoteMessage.getData());
 
-//            if (/* Check if data needs to be processed by long running job */ true) {
-//                // For long-running tasks (10 seconds or more) use Firebase Job Dispatcher.
-//                scheduleJob();
-//            } else {
-//                // Handle message within 10 seconds
-//                handleNow();
-//            }
-            handleNow();
-            try {
-                Toast.makeText(this, (CharSequence) remoteMessage.getData(), Toast.LENGTH_LONG).show();
-            }
-            catch (Exception e) {
-                System.out.print(e);
-                e.printStackTrace();
-            }
-
+            handleNow(remoteMessage);
         }
 
         // Check if message contains a notification payload.
@@ -75,25 +71,67 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     }
     // [END receive_message]
 
-    /**
-     * Schedule a job using FirebaseJobDispatcher.
-     */
-//    private void scheduleJob() {
-//        // [START dispatch_job]
-//        FirebaseJobDispatcher dispatcher = new FirebaseJobDispatcher(new GooglePlayDriver(this));
-//        Job myJob = dispatcher.newJobBuilder()
-//                .setService(MyJobService.class)
-//                .setTag("my-job-tag")
-//                .build();
-//        dispatcher.schedule(myJob);
-//        // [END dispatch_job]
-//    }
+
 
     /**
      * Handle time allotted to BroadcastReceivers.
      */
-    private void handleNow() {
+    private void handleNow(RemoteMessage remoteMessage) {
         Log.d(TAG, "Short lived task is done.");
+
+        Map<String, String> data = remoteMessage.getData();
+
+        try {
+            final String userID = remoteMessage.getData().get("from_user");
+            final String msg = remoteMessage.getData().get("message");
+            Log.d(TAG, userID + ": " + msg);
+            Handler handler = new Handler(Looper.getMainLooper());
+
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    // Run your task here
+                    Toast.makeText(getApplicationContext(), "From user " + userID + ":\n" + msg, Toast.LENGTH_LONG).show();
+                }
+            }, 1000 );
+
+//            JSONObject datObj = new JSONObject(data);
+
+//            String chatRoomId = datObj.getString("chat_room_id");
+
+//            JSONObject mObj = datObj.getJSONObject("message");
+            ChatMessage message = new ChatMessage();
+//            message.setMessage(mObj.getString("message"));
+            message.setMessage(msg);
+//            message.setId(mObj.getString("message_id"));
+//            message.setCreatedAt(mObj.getString("created_at"));
+
+//            JSONObject uObj = datObj.getJSONObject("user");
+
+            // skip the message if the message belongs to same user as
+            // the user would be having the same message when he was sending
+            // but it might differs in your scenario
+//            if (uObj.getString("user_id").equals(MyApplication.getInstance().getPrefManager().getUser().getId())) {
+//                Log.e(TAG, "Skipping the push message as it belongs to same user");
+//                return;
+//            }
+
+            User user = new User();
+//            user.setId(uObj.getString("user_id"));
+            user.setId(userID);
+//            user.setPhone(uObj.getString("phone"));
+//            user.setName(uObj.getString("name"));
+            message.setUser(user);
+
+            Intent newMessage = new Intent("NewMessage");
+            newMessage.putExtra("message", message);
+//            pushNotification.putExtra("chat_room_id", chatRoomId);
+            LocalBroadcastManager.getInstance(this).sendBroadcast(newMessage);
+        }
+        catch (Exception e) {
+            System.out.print(e);
+            e.printStackTrace();
+        }
     }
 
     /**
