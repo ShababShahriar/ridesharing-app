@@ -37,7 +37,7 @@ import java.util.Map;
 import petproject.ridesharing.models.Booking;
 
 public class AddBookingActivity extends AppCompatActivity {
-    private String addStartTime, fromLocation, toLocation, rideType;
+    private String fromLocation, toLocation, rideType, startTime;
     private int numUsers;
 
     public final String TAG = getClass().getSimpleName();
@@ -134,10 +134,25 @@ public class AddBookingActivity extends AppCompatActivity {
                 Calendar cal = Calendar.getInstance();
                 cal.setTime(new Date());
                 String today = dateFormat.format(cal.getTime());
-//                fromLocation = fromLocation.replace(" ", "%20");
-//                toLocation = toLocation.replace(" ", "%20");
                 final String relatedTopicName = fromLocation.replace(" ", "%20") + "-" + toLocation.replace(" ", "%20") + "-" + today;
                 FirebaseMessaging.getInstance().subscribeToTopic(relatedTopicName);
+
+                startTime = setStartTime.getText().toString();
+                String timeOfDay = startTime.substring(startTime.length()-2, startTime.length());
+                if (timeOfDay.equals("PM")) {
+                    String hour = startTime.substring(0, 2);
+                    if (!hour.equals("12")) {
+                        hour = (Integer.parseInt(hour) + 12) + "";
+                        startTime = hour.concat(startTime.substring(2));
+                    }
+                }
+
+                dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                cal = Calendar.getInstance();
+                cal.setTime(new Date());
+                today = dateFormat.format(cal.getTime());
+
+                startTime = today + " " + startTime.substring(0, startTime.length()-3);
 
                 String endPoint = Utility.BASE_URL + "addbooking/";
 
@@ -154,6 +169,9 @@ public class AddBookingActivity extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(), "Booking Added!", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(AddBookingActivity.this, ChatActivity.class);
                                 intent.putExtra("bookingID", obj.getInt("booking_id")+"");
+                                intent.putExtra("fromLocation", fromLocation);
+                                intent.putExtra("toLocation", toLocation);
+                                intent.putExtra("startTime", startTime);
                                 startActivity(intent);
                             }
 
@@ -174,23 +192,6 @@ public class AddBookingActivity extends AppCompatActivity {
                     @Override
                     protected Map<String, String> getParams() {
                         Map<String, String> params = new HashMap<String, String>();
-
-                        String startTime = setStartTime.getText().toString();
-                        String timeOfDay = startTime.substring(startTime.length()-2, startTime.length());
-                        if (timeOfDay.equals("PM")) {
-                            String hour = startTime.substring(0, 2);
-                            if (!hour.equals("12")) {
-                                hour = (Integer.parseInt(hour) + 12) + "";
-                                startTime = hour.concat(startTime.substring(2));
-                            }
-                        }
-
-                        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                        Calendar cal = Calendar.getInstance();
-                        cal.setTime(new Date());
-                        String today = dateFormat.format(cal.getTime());
-
-                        startTime = today + " " + startTime.substring(0, startTime.length()-3);
 
                         params.put("from_location", fromLocation);
                         params.put("to_location", toLocation);

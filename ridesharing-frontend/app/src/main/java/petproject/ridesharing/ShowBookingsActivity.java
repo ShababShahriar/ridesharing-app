@@ -29,17 +29,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import petproject.ridesharing.models.Booking;
-
-
-//import com.android.volley.NetworkResponse;
-//import com.android.volley.Request;
-//import com.android.volley.Response;
-//import com.android.volley.VolleyError;
-//import com.android.volley.toolbox.StringRequest;
 
 
 public class ShowBookingsActivity extends AppCompatActivity {
@@ -109,29 +100,6 @@ public class ShowBookingsActivity extends AppCompatActivity {
         //Adding request to request queue
         Utility.addToRequestQueue(strReq, getApplicationContext());
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Subscribing to topic...", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//
-//                FirebaseMessaging.getInstance().subscribeToTopic("news2");
-//            }
-//        });
-
-
-//        Intent intent = getIntent();
-//        chatRoomId = intent.getStringExtra("chat_room_id");
-//        String title = intent.getStringExtra("name");
-
-//        getSupportActionBar().setTitle(title);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-//        if (chatRoomId == null) {
-//            Toast.makeText(getApplicationContext(), "Chat room not found!", Toast.LENGTH_SHORT).show();
-//            finish();
-//        }
 
         recyclerView = (RecyclerView) findViewById(R.id.show_bookings_recycler_view);
 
@@ -155,8 +123,10 @@ public class ShowBookingsActivity extends AppCompatActivity {
                 if(position==0 || booking.is_full())
                     return;
                 Intent intent = new Intent(ShowBookingsActivity.this, ChatActivity.class);
-//                intent.putExtra("chat_room_id", chatRoom.getId());
-//                intent.putExtra("name", chatRoom.getName());
+                intent.putExtra("bookingID", booking.getId());
+                intent.putExtra("fromLocation", booking.getFromLocation());
+                intent.putExtra("toLocation", booking.getToLocation());
+                intent.putExtra("startTime", booking.getStartTime());
                 startActivity(intent);
             }
         }));

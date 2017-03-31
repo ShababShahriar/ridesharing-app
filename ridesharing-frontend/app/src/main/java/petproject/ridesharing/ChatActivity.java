@@ -23,10 +23,22 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import petproject.ridesharing.models.ChatMessage;
 import petproject.ridesharing.models.User;
@@ -38,18 +50,18 @@ import petproject.ridesharing.models.User;
 //import com.android.volley.toolbox.StringRequest;
 
 
-public class ChatActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class ChatActivity extends AppCompatActivity {
 
     private String TAG = ChatActivity.class.getSimpleName();
 
-    private String chatRoomId;
+    private String bookingID, fromLocation, toLocation, startTime;
     private RecyclerView recyclerView;
     private ChatAdapter mAdapter;
     private ArrayList<ChatMessage> messageArrayList;
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     private EditText inputMessage;
     private Button btnSend;
+    private JSONArray messagesJSONArray;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,24 +81,16 @@ public class ChatActivity extends AppCompatActivity
 //            }
 //        });
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
 
 
-//        Intent intent = getIntent();
-//        chatRoomId = intent.getStringExtra("chat_room_id");
-//        String title = intent.getStringExtra("name");
+        Intent intent = getIntent();
+        bookingID = intent.getStringExtra("bookingID");
+        fromLocation = intent.getStringExtra("fromLocation");
+        toLocation = intent.getStringExtra("toLocation");
+        startTime = intent.getStringExtra("startTime");
+        inputMessage = (EditText) findViewById(R.id.chat_message);
 
-//        getSupportActionBar().setTitle(title);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-//        if (chatRoomId == null) {
+//        if (bookingID == null) {
 //            Toast.makeText(getApplicationContext(), "Chat room not found!", Toast.LENGTH_SHORT).show();
 //            finish();
 //        }
@@ -109,7 +113,6 @@ public class ChatActivity extends AppCompatActivity
             @Override
             public void onReceive(Context context, Intent intent) {
                 if (intent.getAction().equals("NewMessage")) {
-                    // new push message is received
                     handlePushNotification(intent);
                 }
             }
@@ -122,10 +125,10 @@ public class ChatActivity extends AppCompatActivity
 //            }
 //        });
 //
-//        fetchChatThread();
-        handlePushNotification(null);
-        handlePushNotification(null);
-        handlePushNotification(null);
+        fetchChatThread("9");
+//        handlePushNotification(null);
+//        handlePushNotification(null);
+//        handlePushNotification(null);
     }
 
     @Override
@@ -142,19 +145,119 @@ public class ChatActivity extends AppCompatActivity
         super.onPause();
     }
 
+    private void fetchChatThread(final String bookingID) {
+        String endPoint = String.format(Utility.BASE_URL + ("getAllMessages?booking_id=%1$s"), bookingID);
+        Log.d(TAG, endPoint);
+
+        StringRequest strReq = new StringRequest(Request.Method.GET,
+                endPoint, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, "response: " + response);
+
+                try {
+                    JSONObject obj = new JSONObject(response);
+                    if(obj.getBoolean("success")) {
+                        Toast.makeText(getApplicationContext(), "Messages Received!", Toast.LENGTH_SHORT).show();
+                        messagesJSONArray = obj.getJSONArray("messages");
+                        Log.d(TAG, messagesJSONArray.toString());
+
+                        int n = messagesJSONArray.length(), curIndex=0;
+
+                        if (n==0) {
+                            Toast.makeText(getApplicationContext(), "No messages in this conversation yet", Toast.LENGTH_LONG).show();
+                        }
+
+                        while (curIndex < n) {
+                            JSONObject curObj = messagesJSONArray.getJSONObject(curIndex++);
+
+                            ChatMessage curMessage = ChatMessage.createMessageFromJSON(curObj);
+                            messageArrayList.add(curMessage);
+                            mAdapter.notifyDataSetChanged();
+                        }
+                    }
+
+                } catch (JSONException e) {
+                    Log.e(TAG, "json parsing error: " + e.getMessage());
+                    Toast.makeText(getApplicationContext(), "Json parse error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                NetworkResponse networkResponse = error.networkResponse;
+                Log.e(TAG, "Volley error: " + error.getMessage() + ", code: " + networkResponse);
+                Toast.makeText(getApplicationContext(), "Volley error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        Utility.addToRequestQueue(strReq, getApplicationContext());
+    }
+
     private void handlePushNotification(Intent intent) {
-//        ChatMessage message = (ChatMessage) intent.getSerializableExtra("message");
-//        String chatRoomId = intent.getStringExtra("chat_room_id");
+        ChatMessage message = (ChatMessage) intent.getSerializableExtra("message");
+//        String userID = intent.getStringExtra("from_user");
 
-        ChatMessage message = new ChatMessage("5", "This is a test", null, new User("5", null, null));
+//        ChatMessage message = new ChatMessage("5", "This is a test", null, new User("5", null, null));
 
-//        if (message != null && chatRoomId != null) {
+//        if (message != null && bookingID != null) {
             messageArrayList.add(message);
             mAdapter.notifyDataSetChanged();
             if (mAdapter.getItemCount() > 1) {
                 recyclerView.getLayoutManager().smoothScrollToPosition(recyclerView, null, mAdapter.getItemCount() - 1);
             }
 //        }
+    }
+
+    public void onSendMessageClick(View v) {
+        if (v.getId() == R.id.btn_send) {
+            String endPoint = Utility.BASE_URL + "addmessage/";
+
+            StringRequest strReq = new StringRequest(Request.Method.POST,
+                    endPoint, new Response.Listener<String>() {
+
+                @Override
+                public void onResponse(String response) {
+                    Log.d(TAG, "response: " + response);
+
+                    try {
+                        JSONObject obj = new JSONObject(response);
+                        if(obj.getBoolean("success")) {
+                            Toast.makeText(getApplicationContext(), "Message Sent!", Toast.LENGTH_SHORT).show();
+                            inputMessage.setText("");
+                        }
+
+                    } catch (JSONException e) {
+                        Log.e(TAG, "json parsing error: " + e.getMessage());
+                        Toast.makeText(getApplicationContext(), "Json parse error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }, new Response.ErrorListener() {
+
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    NetworkResponse networkResponse = error.networkResponse;
+                    Log.e(TAG, "Volley error: " + error.getMessage() + ", code: " + networkResponse);
+                    Toast.makeText(getApplicationContext(), "Volley error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }) {
+                @Override
+                protected Map<String, String> getParams() {
+                    Map<String, String> params = new HashMap<String, String>();
+
+                    params.put("message_text", inputMessage.getText().toString());
+                    params.put("booking_id", "9");
+                    params.put("user_id", "1");
+
+                    Log.d(TAG, "params: " + params.toString());
+                    return params;
+                }
+            };
+
+            Utility.addToRequestQueue(strReq, getApplicationContext());
+        }
     }
 
     @Override
@@ -189,28 +292,4 @@ public class ChatActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
 }

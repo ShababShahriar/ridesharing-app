@@ -125,7 +125,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
             Intent newMessage = new Intent("NewMessage");
             newMessage.putExtra("message", message);
-//            pushNotification.putExtra("chat_room_id", chatRoomId);
+            newMessage.putExtra("fromUser", userID);
             LocalBroadcastManager.getInstance(this).sendBroadcast(newMessage);
         }
         catch (Exception e) {

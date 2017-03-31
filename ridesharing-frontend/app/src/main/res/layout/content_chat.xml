@@ -20,6 +20,46 @@
     tools:context=".ChatActivity"
     tools:showIn="@layout/activity_chat">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="10dp"
+        android:baselineAligned="false">
+
+        <TextView
+            android:id="@+id/chat_from_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="F"
+            android:textStyle="bold"
+            android:padding="5dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="  -  "
+            android:padding="5dp"/>
+
+        <TextView
+            android:id="@+id/chat_to_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="T"
+            android:textStyle="bold"
+            android:padding="5dp"/>
+
+        <TextView
+            android:id="@+id/chat_ride_start_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ride starts at:  11:00 AM"
+            android:textStyle="italic"
+            android:padding="5dp"
+            android:layout_marginLeft="15dp"/>
+    </LinearLayout>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
@@ -35,7 +75,7 @@
         android:orientation="horizontal"
         android:weightSum="4">
 
-        <EditText android:id="@+id/message"
+        <EditText android:id="@+id/chat_message"
             android:layout_width="0dp"
             android:hint="Enter message"
             android:paddingLeft="10dp"
@@ -44,16 +84,17 @@
             android:layout_marginStart="16dp"
             android:lines="1"
             android:layout_height="wrap_content"
-            android:layout_weight="3" />
+            android:layout_weight="3.2" />
 
         <Button android:id="@+id/btn_send"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@null"
-            android:text="SEND"
-            android:textSize="16dp"
-            android:textColor="@color/colorPrimary" />
+            android:layout_weight="0.8"
+            android:background="@drawable/ic_menu_send"
+            android:scaleX="0.4"
+            android:scaleY="0.7"
+            android:textColor="@color/colorPrimary"
+            android:onClick="onSendMessageClick"/>
 
     </LinearLayout>
 

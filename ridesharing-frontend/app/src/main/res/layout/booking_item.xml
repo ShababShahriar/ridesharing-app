@@ -3,12 +3,6 @@
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <!--<TableRow-->
-        <!--android:id="@+id/table_row"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent">-->
-    <!--</TableRow>-->
-
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">

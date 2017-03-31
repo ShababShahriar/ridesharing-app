@@ -1,5 +1,8 @@
 package petproject.ridesharing.models;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.Serializable;
 
 
@@ -15,6 +18,21 @@ public class ChatMessage implements Serializable {
         this.message = message;
         this.createdAt = createdAt;
         this.user = user;
+    }
+
+    public static ChatMessage createMessageFromJSON(JSONObject jsonObject) {
+        try {
+            return new ChatMessage(
+                    jsonObject.getString("id"),
+                    jsonObject.getString("message_text"),
+//                    jsonObject.getString("created_at"),
+                    "",
+                    new User(jsonObject.getInt("from_user") + "", "", "")
+            );
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public String getId() {

@@ -8,11 +8,12 @@ import java.io.Serializable;
 
 public class Booking implements Serializable {
     private String relatedTopicName, fromLocation, toLocation, rideType, startTime;
-    private int numUsers;
+
+    private int id, numUsers;
     private boolean isFull;
 
 
-    public Booking(String relatedTopicName, String fromLocation, String toLocation, String rideType, String startTime, int numUsers, boolean isFull) {
+    public Booking(String relatedTopicName, String fromLocation, String toLocation, String rideType, String startTime, int numUsers, boolean isFull, int id) {
         this.relatedTopicName = relatedTopicName;
         this.fromLocation = fromLocation;
         this.toLocation = toLocation;
@@ -20,6 +21,7 @@ public class Booking implements Serializable {
         this.startTime = startTime;
         this.numUsers = numUsers;
         this.isFull = isFull;
+        this.id = id;
     }
 
     public Booking(String relatedTopicName, String fromLocation, String toLocation, String rideType, String startTime, int numUsers) {
@@ -40,7 +42,8 @@ public class Booking implements Serializable {
                     jsonObject.getString("ride_type"),
                     jsonObject.getString("start_time"),
                     jsonObject.getInt("num_users"),
-                    jsonObject.getBoolean("is_full"));
+                    jsonObject.getBoolean("is_full"),
+                    jsonObject.getInt("id"));
         } catch (JSONException e) {
             e.printStackTrace();
             return null;
@@ -101,6 +104,10 @@ public class Booking implements Serializable {
 
     public void setFull(boolean full) {
         this.isFull = full;
+    }
+
+    public int getId() {
+        return id;
     }
 
     @Override

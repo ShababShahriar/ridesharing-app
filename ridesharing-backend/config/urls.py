@@ -16,16 +16,20 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
-from ridesharing.messages import views as messageViews
 from ridesharing.users import views as userViews
 from ridesharing.bookings import views as bookingViews
+from ridesharing.messages import views as messageViews
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^login/', userViews.Login.as_view()),
     url(r'^updateToken/', userViews.StoreRegistrationToken.as_view()),
-    url(r'^message/', messageViews.SendToTopic.as_view()),
+
     url(r'^addbooking/', bookingViews.AddNewBooking.as_view()),
     url(r'^joinbooking/', bookingViews.JoinBooking.as_view()),
     url(r'^getActiveBookingList', bookingViews.GetActiveBookingList.as_view()),
+
+    url(r'^addmessage', messageViews.AddNewMessage.as_view()),
+    url(r'^message/', messageViews.SendToTopic.as_view()),
+    url(r'^getAllMessages/', messageViews.GetAllMessages.as_view()),
 ]
